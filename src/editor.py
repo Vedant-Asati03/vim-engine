@@ -63,7 +63,6 @@ class VimEditor(
 
     def handle_mode_switch(self, event) -> None:
         """Process key events based on current mode."""
-        # Record key before any processing
         should_record = (
             self.macro_recorder.recording_macro
             and self.mode == VimMode.NORMAL
@@ -79,9 +78,6 @@ class VimEditor(
             self._next_key_handler = None
             event.prevent_default()
             return
-# TODO: handle entering visual mode with cursor selection
-        # if self.selected_text:
-        #     self.mode = VimMode.VISUAL
 
         match self.mode:
             case VimMode.COMMAND:
@@ -103,16 +99,13 @@ class VimEditor(
                 command, repeat = self.get_command_from_sequence()
 
                 if command in self.normal_mode:
-                    # Record the complete command after confirming it's valid
-                    if should_record:
-                        self.macro_recorder.record_key(command)
-
                     # Execute the command
                     self.normal_mode[command]()
 
                     if command not in list("iIoOaA"):
                         self.read_only = True
 
+                    # Important: Reset sequence after command execution
                     self.reset_sequence()
                     event.prevent_default()
                 else:
