@@ -1,5 +1,19 @@
-from typing import Optional, List, Dict
+from textual.events import Key
+from typing import Optional, List, Dict, Any
 from datetime import datetime
+
+
+class MacroEvent:
+    """Simulates a Key event for macro playback."""
+
+    def __init__(self, key: str):
+        self.key = key
+        self.character = key
+        self.is_printable = len(key) == 1
+
+    def prevent_default(self) -> None:
+        """Simulate prevent_default() method."""
+        pass
 
 
 class MacroRecorder:
@@ -12,6 +26,8 @@ class MacroRecorder:
         self.recording_keys: List[str] = []
         self.editor = editor
         self.recorded_macros: Dict[str, List[datetime]] = {}
+        self.temp_sequence = ""
+        self.current_command = ""
 
     def start_recording(self, register: str) -> None:
         """Start recording keys to the specified macro register."""
@@ -21,14 +37,20 @@ class MacroRecorder:
     def stop_recording(self) -> None:
         """Stop recording and save the macro."""
         if self.recording_macro:
+            # Check for any remaining valid command sequence
+            if self.temp_sequence in self.editor.normal_mode:
+                self.recording_keys.append(self.temp_sequence)
+
             self.macros[self.recording_macro] = self.recording_keys
             self.recording_macro = None
             self.recording_keys = []
+            self.temp_sequence = ""
 
     def record_key(self, key: str) -> None:
         """Record a keypress in the current macro."""
-        if self.recording_macro and key not in ["q", "@"]:
-            self.recording_keys.append(key)
+        if not self.recording_macro or key in ["q", "@"]:
+            return
+        self.recording_keys.append(key)
 
     def play_macro(self, register: str) -> List[str]:
         """Play back a recorded macro."""
@@ -89,7 +111,10 @@ class MacroRecorder:
             if register and register in self.macros:
                 keys = self.play_macro(register)
                 for key in keys:
-                    self.editor.handle_mode_switch(type("Event", (), {"key": key})())
+                    # Send each key as a separate event
+                    self.editor.handle_mode_switch(MacroEvent(key))
+                    # Important: Wait for command to complete
+                    self.editor.reset_sequence()
             self.editor.reset_sequence()
 
         self.editor.capture_next_key(on_register)
