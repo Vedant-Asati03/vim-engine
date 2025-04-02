@@ -32,3 +32,4 @@ class InsertMode(BaseMode):
             self.action_cursor_up()
 
         self.refresh()
+        return True  # Add this to indicate event should be prevented
