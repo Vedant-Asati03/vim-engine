@@ -76,6 +76,3 @@ class NormalMode(BaseMode):
         if self.lines[row].startswith("    "):
             self.lines[row] = self.lines[row][4:]
             self.cursor_location = (row, col - 4)
-
-    def a(self):
-        return 2
