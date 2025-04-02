@@ -1,4 +1,3 @@
-import re
 from .base_mode import BaseMode
 from ..config import VimMode
 
