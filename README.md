@@ -1,44 +1,23 @@
-# Textual Vim Plugin
+# Vim Engine (WIP)
 
-## Overview
-Textual Vim Extended is a project aimed at enhancing the Vim text editor with additional features and functionalities. This project extends the capabilities of Vim, making it more powerful and user-friendly for developers and text editors.
+This repository hosts a UI-agnostic Vim-style editing engine that can be embedded
+into any text widget. The previous Textual-focused implementation now lives under
+`legacy/current` for reference while we rebuild the core from the ground up.
 
-## Features
-- Enhanced text editing capabilities
-g- Customizable key bindings
-- Improved syntax highlighting
-- Additional plugins and extensions
-- User-friendly interface enhancements
+## Roadmap
 
-## Installation
-To install Textual Vim Extended, follow these steps:
+1. **Buffer + Undo Model** – standalone text buffer with cursor state, registers,
+   and linear undo history.
+2. **Mode / Operator Pipeline** – mode manager, operator contexts, and command
+   sequencing independent of UI bindings.
+3. **Configurable Keymaps** – data-driven bindings with runtime overrides and
+   extension points for host applications.
+4. **Macro & Register Services** – persistence hooks for registers, command
+   history, and search patterns.
+5. **Text Objects** – shared selectors (word, paragraph, block) powering motions
+   and operators alike.
+6. **Host Adapter Protocols** – small surface area every UI must expose plus
+   first-party adapters for Textual and Ratatui.
+7. **Testing & Tooling** – `uv` powered workflow with pytest + ruff coverage.
 
-1. Clone the repository:
-    ```sh
-    git clone https://github.com/yourusername/textual-vim-extended.git
-    ```
-2. Navigate to the project directory:
-    ```sh
-    cd textual-vim-extended
-    ```
-3. Run the installation script:
-    ```sh
-    ./install.sh
-    ```
-
-## Usage
-After installation, you can start using Textual Vim Extended by opening Vim and exploring the new features and enhancements. Refer to the documentation for detailed usage instructions and customization options.
-
-## Contributing
-Contributions are welcome! If you would like to contribute to this project, please follow these steps:
-
-1. Fork the repository.
-2. Create a new branch for your feature or bugfix.
-3. Commit your changes and push the branch to your fork.
-4. Submit a pull request with a detailed description of your changes.
-
-## License
-This project is licensed under the MIT License. See the `LICENSE` file for more details.
-
-## Contact
-For any questions or feedback, please contact the project maintainer at your.email@example.com.
+Stay tuned as each milestone lands; contributions and design feedback are welcome.
