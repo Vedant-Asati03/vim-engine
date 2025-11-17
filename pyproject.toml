@@ -1,26 +1,15 @@
 [project]
 name = "vim-engine"
 version = "0.1.0"
-description = "UI-agnostic Vim editing engine with pluggable adapters"
-authors = [{ name = "Vedant Asati" }]
+description = "Add your description here"
 readme = "README.md"
-requires-python = ">=3.11"
-dependencies = []
-
-[project.optional-dependencies]
-adapters = ["textual>=0.48.0", "ratatui>=0.26.0"]
-
-dev = [
-  "pytest>=8.0.0",
-  "ruff>=0.6.0",
+requires-python = ">=3.13"
+dependencies = [
+    "telelog-python>=0.2.0",
 ]
 
-[build-system]
-requires = ["setuptools>=68.0"]
-build-backend = "setuptools.build_meta"
-
-[tool.setuptools]
-package-dir = {"" = "src"}
-
-[tool.setuptools.packages.find]
-where = ["src"]
+[dependency-groups]
+dev = [
+    "pytest>=9.0.1",
+    "ruff>=0.14.5",
+]
