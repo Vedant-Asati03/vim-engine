@@ -1,3 +1,5 @@
+![logo](./assets/logo.png)
+
 # Vim Engine
 
 > A UI-agnostic Vim editing core with first-party adapters for Textual (and soon Ratatui).
